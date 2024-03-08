@@ -1,0 +1,29 @@
+#body{
+    /* background-color: #1d1e22; */
+}
+#datetime{
+    margin-top: 5rem;
+    /* color: white; */
+}
+.WorkoutLogger th,.WorkoutLogger td{
+    padding: 0rem 3rem 0rem 3rem;
+}
+.WorkoutLogger thead tr td{
+    border: 0.1rem solid black;
+    background-color: #66A5AD;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.WorkoutLogger tr .trow{
+    text-align: center;
+    border: 0.1rem solid black;
+}
+.WorkoutLogger tr:nth-of-type(even) {
+    background-color: #C4DFE6;
+}
+.WorkoutLogger tr:nth-of-type(odd){
+    background-color: #EDF4F2;
+}
+.WorkoutLogger .addExercise{
+    background-color: white;
+}

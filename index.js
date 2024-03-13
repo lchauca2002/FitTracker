@@ -37,15 +37,45 @@ app.get('/add_to_log', async(req,res)=>{
     console.log(addExercise);
     res.render('add_to_log.ejs',{ addExercise });
 })
-//work in progress
-// app.post('/exerciselog', async(req,res)=>{
-//     const newLog = await new addExercise(req.body)
+
+// //adds workouts to log 
+// app.post('/exerciselog', async (req, res) => {
+//     const newLog = await new cardioLog(req.body);
+//     await newLog.save();
 //     res.redirect('/exerciselog');
 // })
 
+// //Will be able to send the information and save on a database
+// app.post('/exerciselog', async(req,res)=>{
+//     //Adds workout to your log
+//     const newWorkoutLog = new cardioLog(req.body);
+//     await newWorkoutLog.save();
+//     //Adds this new exercise to the database for future searches
+//     const newExercise = new cardioExercise({name: req.body.cardioname});
+//     await newExercise.save()
+//     res.redirect('/exerciselog');
+// })
 
+//this post functions as the top 2 post i had previously
+app.post('/exerciselog', async (req, res) => {
+    const cardioLogExists = await cardioLog.exists({ cardioname: req.body.cardioname });
 
+    // Check if cardio name already exists
+    if (cardioLogExists) {
+        // Cardio name already exists, don't add a new cardio name
+        const newLog = new cardioLog(req.body);
+        await newLog.save();
+    } else {
+        // Cardio name doesn't exist, add a new cardio name
+        const newWorkoutLog = new cardioLog(req.body);
+        await newWorkoutLog.save();
 
+        // Adds this new exercise to the database for future searches
+        const newExercise = new cardioExercise({ name: req.body.cardioname });
+        await newExercise.save();
+    }
+    res.redirect('/exerciselog');
+});
 
 
 //allows us to see caloricbalance

@@ -68,6 +68,67 @@
         <a id="linkToHideForm" href="#" onclick="hideFormOnClick(event)">Hide Form</a>
     </div>
 
+    <br>
+    <table class="WorkoutLogger">
+        <thead>
+            <tr>
+                <th scope="col" class="topRow">Activity Name</th>
+                <th scope="col" class="topRow">NumOfSets</th>
+                <th scope="col" class="topRow">Repetitions</th>
+                <th scope="col" class="topRow">Weight</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let workout of exerciseLog){ %>
+                <% if (workout.exercisetype === 'strength') { %>
+                <tr>
+                    
+                    <td class="trow" onclick="editstrengthExercise('<%=workout.id %>', '<%=workout.exercisetype %>','<%=workout.exercisename %>', 
+                    '<%=workout.numofsets %>', '<%=workout.repetitions %>', '<%=workout.weight %>')">
+                        <%= workout.exercisename %>
+                    </td>
+                    <td class="trow"><%= workout.numofsets %></td>
+                    <td class="trow"><%= workout.repetitions %></td>
+                    <td class="trow"><%= workout.weight %> lbs</td>
+                    <td class="deleterow">
+                        <form id="deleteForm" action="/exerciselog/?_method=delete" method="post">
+                            <input type="hidden" id="id" name="id" value="<%= workout.id %>">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% } %>
+            <% } %>
+            <tr class="bottom">
+                <td class="addExercise"><a href="add_to_strength">Add Exercise</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div id="editstrengthForm" style="display: none;">
+        <form id="exerciseForm" onsubmit="submitstrengthForm(); return false;">
+            <input type="hidden" id="editId" name="editId">
+            <input type="hidden" id="editType" name="editType">
+            <input type="hidden" id="editName" name="editName">
+            
+            <label for="editNumofsets">NumOfSets:</label>
+            <input type="number" id="editNumofsets" name="editNumofsets" required>
+            
+            <label for="editRepetitions">Repetitions:</label>
+            <input type="number" id="editRepetitions" name="editRepetitions" required>
+           
+            <label for="editWeight">Weight:</label>
+            <input type="number" id="editWeight" name="editWeight" required><span>lbs</span>
+            <button type="submit">Save</button>
+        </form>
+        <a id="linkToHideForm" href="#" onclick="hideFormOnClick('editstrengthForm')">Hide Form</a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

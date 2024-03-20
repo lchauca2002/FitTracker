@@ -12,17 +12,36 @@
 <body>
     <%- include('partials/navbar') %>
         <h1>Add Workout</h1>
-        <form action="/exerciselog" method="post">
-            <label for="workoutName">Add Workout Name:</label>
-            <input type="text" id="workoutName" name="cardioname"required>
-            <br>
-            <label for="duration">How Long?</label>
-            <input type="number" id="duration" name="duration" required><span>Minutes</span>
-            <br>
-            <label for="cals"># of Calories Burned</label>
-            <input type="number" id="cals" name="calories">
-            <br>
-            <button> Submit</button>
+         <form action="/exerciselog" method="post" class="row g-3 needs-validation" novalidate>
+            <input type="hidden" name="exercisetype" value="cardio" required>
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">Add Workout Name:</label>
+                <input type="text" class="form-control" id="validationCustom01" name="exercisename" required>
+                <div class="invalid-feedback">
+                    Please provide workout name.
+                </div>
+            </div>
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <label for="validationCustom02" class="form-label">How Long?</label>
+                <input type="number" class="form-control" id="validationCustom02" name="duration"
+                    required><span>Minutes</span>
+                <div class="invalid-feedback">
+                    Please provide duration.
+                </div>
+            </div>
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <label for="validationCustom03" class="form-label"># of Calories Burned</label>
+                <input type="number" class="form-control" id="validationCustom03" name="calories" required>
+                <div class="invalid-feedback">
+                    Please provide calories burned.
+                </div>
+            </div>
+            <div class="col-md-8"></div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
         </form>
         <a href="/add_to_log">Return to adding a workout</a>
         <br>
@@ -31,6 +50,27 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms)
+                    .forEach(form => {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
+        </script>
 </body>
 
 </html>

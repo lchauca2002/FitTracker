@@ -73,6 +73,12 @@ function showFormAndSelectExercise(selectedExercise) {
     form.setAttribute('novalidate','');
     form.classList.add('row', 'g-2', 'needs-validation');
 
+    //Date input
+    const dateInput = document.createElement('input');
+    dateInput.type = 'hidden';
+    dateInput.name = 'date';
+    dateInput.value = new Date().toLocaleString();
+
     // Exercisetype input
     const divCol1 = document.createElement('div');
     divCol1.classList.add('col-md-4');

@@ -28,10 +28,21 @@
             </ul>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="d-flex ms-auto p-0 gap-2">
-                    <a class="nav-link" href="#">
+                    <% if(!currentUser) {%>
+                    <a class="nav-link" href="/LoginPG">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="" 
+                        id="login">Login</button>
+                    </a>
+                    <a class="nav-link" href="/SignupPG">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="" 
+                        id="Signup">Sign Up</button>
+                    </a>
+                    <% } else { %>
+                    <a class="nav-link" href="/logout">
                         <button type="button" class="btn btn-secondary btn-sm" onclick=""
                             id="logout">Logout</button>
                     </a>
+                    <% } %>
                 </div>
             </div>
         </div>

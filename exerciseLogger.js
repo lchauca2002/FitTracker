@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const exerciseLogSchema = new Schema({
-    // user_id:{
-    //     type: String,
-    //     required: true
-    // },
+    date: {
+        type: Date,
+        required: true
+    },
     exercisetype: {
         type: String,
         enum: ['cardio', 'strength'],
@@ -50,6 +50,10 @@ const exerciseLogSchema = new Schema({
         required: function () {
             return this.exerciseType === 'strength'; // Require only for strength
         }
+    },
+    autho: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

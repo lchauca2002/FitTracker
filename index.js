@@ -65,6 +65,11 @@ app.use((req,res,next)=>{
     next();
 })
 
+app.use('/exerciselog', exerciselogRoutes);
+app.use('/view_full_report', viewFullReportRoute);
+app.use('/findnearyou', findnearyouRoute);
+app.use('/', usersRoutes);
+
 
 //allows us to see home page
 app.get('/', (req,res) => {

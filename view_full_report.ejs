@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/styles/filter.css">
+</head>
+
+<body>
+    <% layout('layouts/boilerplate') %>
+        <h2>Full Diary Report</h2>
+
+        <h3>Filter here:</h3>
+        <p>From: <input type="text" class="from"></p>
+        <p>To: <input type="text" class="to"></p>
+        <fieldset>
+            <legend>Choose the Exercise Type:</legend>
+            <div>
+                <input type="checkbox" class="exercisetype" id="cardio" value="cardio">
+                <label for="cardio">Cardio</label>
+                <input type="checkbox" class="exercisetype" id="strength" value="strength">
+                <label for="strength">Strength</label>
+            </div>
+        </fieldset>
+        
+        <button class="filterButton">Filter</button>
+        
+
+        <div>
+            <ul id="exerciseList">
+                <% for(let workout of userExerciseLogs) { %>
+                    <li class="exercise">
+                        <p>Date: <%= workout.date.toLocaleDateString() %></p>
+                        <p>Exercise Type: <%= workout.exercisetype %></p>
+                        <p>Exercise Name: <%= workout.exercisename %></p>
+                        <% if(workout.exercisetype === 'cardio') { %>
+                            <p>Duration: <%= workout.duration %></p>
+                            <p>Calories: <%= workout.calories %></p>
+                        <% } else if(workout.exercisetype === 'strength') { %>
+                            <p>Num of Sets: <%= workout.numofsets %></p>
+                            <p>Repetitions: <%= workout.repetitions %></p>
+                            <p>Weight: <%= workout.weight %></p>
+                        <% } %>
+                        <p>Logged in userID: <%= currentUser.username %></p>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script src="/scripts/filterdate.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+</head>
+
+<body>
+  <% layout('layouts/boilerplate') %>
+    <div id='map' style='width: 1000px; height: 500px;'></div>
+    <mapbox-search-box
+      access-token="pk.eyJ1IjoibGNoYXVjYTIwMDIiLCJhIjoiY2x1bHFiNmVsMTR2ZjJrbGhraWhteW5lcCJ9.aVgZLb7pXx7wXbhbMyJ1Rw"
+      proximity="0,0">
+    </mapbox-search-box>
+    <script>
+      const mapToken = 'pk.eyJ1IjoibGNoYXVjYTIwMDIiLCJhIjoiY2x1bHFiNmVsMTR2ZjJrbGhraWhteW5lcCJ9.aVgZLb7pXx7wXbhbMyJ1Rw';
+    </script>
+    <script src="/scripts/showmap.js"></script>
+</body>
+
+</html>

@@ -96,6 +96,46 @@ app.get('/add_new_sworkout', catchAsync(async (req,res) => {
     res.render('add_new_sworkout');
 }))
 
+
+const getStartOfWeek = new Date();
+getStartOfWeek.setUTCDate(getStartOfWeek.getDate() - getStartOfWeek.getDay());
+getStartOfWeek.setUTCHours(0, 0, 0, 0); // Set hours in UTC
+const getEndOfWeek = new Date(getStartOfWeek);
+getEndOfWeek.setUTCDate(getStartOfWeek.getUTCDate() + 7);
+console.log(getStartOfWeek.toUTCString());
+
+
+app.get('/progress', isLoggedIn, async (req, res) => {
+    const exerciseLog = await exerciseLogger.find({ exercisetype: 'cardio', date: { $gte: getStartOfWeek, $lte: getEndOfWeek }, author: req.user }).sort({ date: 1 });
+    res.render('progress', { exerciseLog });
+});
+
+app.get('/calendar',isLoggedIn, async (req, res) => {
+    res.render('calendar');
+});
+
+app.get('/reminders', isLoggedIn, async (req, res) => {
+    const remindersData = await reminders.find({ author: req.user._id });
+    res.json(remindersData);
+
+});
+app.post('/calendar', isLoggedIn, async (req, res) => {
+    const eventData = req.body;
+    eventData.author = req.user._id;
+    const newEvent = await reminders.create(eventData);
+    res.status(200).json(newEvent);
+});
+app.put('/calendar', isLoggedIn, async (req, res) => {
+    const eventId = req.body.eventId;
+    const eventData = req.body;
+    const updatedEvent = await reminders.findOneAndUpdate({ _id: eventId, author: req.user._id }, eventData, { new: true });
+    res.status(200).json(updatedEvent);
+});
+app.delete('/calendar', isLoggedIn, async (req, res) => {
+    const eventId = req.body.eventId;
+    const deletedEvent = await reminders.findOneAndDelete({ _id: eventId, author: req.user._id });
+});
+
 //allows us to see caloricbalance
 app.get('/caloricbalance',(req,res)=>{
     res.render('caloricbalance.ejs');

@@ -9,27 +9,47 @@
 
 <body>
     <% layout('layouts/boilerplate') %>
-        <h1>Progress</h1>
-
-        <div>
-            <canvas id="myChart"></canvas>
+        <h1>Progress UTC(time)</h1>
+        <h2>Daily Progress</h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="tcals"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="tdurs"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
-
+        <h2>Weekly Progress</h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="calorieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="durationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="/scripts/chart.js"></script>
         <script>
             const data = <%- JSON.stringify(exerciseLog) %>;
             console.log('Received data:', data); // Print received data
-
-            //Retriving calories from data
-            const calories = data.map(log => log.calories);
-            //console.log(calories);
-
-            const duration = data.map(log => log.duration);
-            //console.log(duration);
-
-            const date = data.map(log => log.date.substring(0, 10));
-            //console.log(date);
 
 
             const startDate = new Date();
@@ -38,15 +58,38 @@
             startDate.toISOString();
             const endDate = new Date(startDate);
             endDate.setDate(startDate.getDate() + 6);
-            // console.log(startDate);
-            // console.log(endDate);
+            console.log(startDate);
+            console.log(endDate);
+            const tdate = new Date();
+            if (tdate < endDate) {
+                tdate.setDate(tdate.getDate() + 1);
+            }
+            console.log(tdate)
+
 
             const datearr = [];
             const caloriesarr = [];
             const durationarr = [];
 
-            for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
-                const logDate = data.find(log => log.date.substring(0, 10) === date.toISOString().substring(0, 10));
+            //array of objects
+            const newarr = {};
+            data.forEach(entry => {
+                const date = entry.date.substring(0, 10);
+                if (!newarr[date]) {
+                    newarr[date] = { calories: 0, duration: 0 }
+                }
+                newarr[date].calories += entry.calories;
+                newarr[date].duration += entry.duration;
+            });
+            const arr = Object.entries(newarr).map(([date, { calories, duration }]) => ({ date, calories, duration }));
+
+            // console.log(arr);
+
+
+            // We can now do tdate to make sure data isn't displayed any further than the current date
+            //or we can do endDate to see the whole data for the whole week even if we aren't at the end of the week
+            for (let date = new Date(startDate); date <= tdate; date.setDate(date.getDate() + 1)) {
+                const logDate = arr.find(log => log.date === date.toISOString().substring(0, 10));
                 // console.log(logDate);
                 if (logDate) {
                     datearr.push(date.toISOString().substring(0, 10));
@@ -61,30 +104,241 @@
             // console.log(datearr);
             // console.log(caloriesarr);
             // console.log(durationarr);
+            console.log(arr);
+            const todayDate = new Date();
+            todayDate.setUTCHours(0, 0, 0, 0);
+            console.log(todayDate.toISOString().substring(0, 10));
+            const tArray = [];
+            data.forEach(newData => {
+                if (todayDate.toISOString().substring(0, 10) === newData.date.substring(0, 10)) {
+                    tArray.push({
+                        exercisename: newData.exercisename,
+                        calories: newData.calories,
+                        duration: newData.duration
+                    });
+                }
+            });
+            console.log(tArray);
+            const tlable = [], tcal = [], tdur = [];
+            tArray.forEach(data => {
+                tlable.push(data.exercisename);
+                tcal.push(data.calories);
+                tdur.push(data.duration);
+            })
+            console.log("Today's data " + tlable);
+            console.log("Today's data " + tcal);
 
-
-
-
-
-            const ctx = document.getElementById('myChart');
-            new Chart(ctx, {
+            const tcals = document.querySelector('#tcals');
+            new Chart(tcals, {
                 type: 'bar',
                 data: {
-                    labels: datearr,
+                    labels: tlable,
                     datasets: [{
-                        label: '# of Calories Burned(Week)',
-                        data: caloriesarr,
-                        borderWidth: 1
+                        label: 'activity',
+                        data: tcal,
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgba(223, 70, 149, 0.8)',
+                            'rgba(242, 54, 8, 0.72)',
+                            'rgba(226, 98, 217, 0.43)',
+                            'rgba(244, 151, 52, 0.91)',
+                            'rgba(32, 211, 194, 0.91)',
+                            'rgba(32, 211, 59, 0.39)',
+                            'rgba(127, 55, 209, 0.39)',
+                        ]
                     }]
                 },
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Calories',
+                                color: 'black',
+                                font: {
+                                    size: 18
+                                }
+                            },
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return value + ' cal';
+                                }
+                            }
+                        },
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: "Today's Report",
+                                color: 'black',
+                                font: {
+                                    size: 16
+                                }
+                            }
+                        }
+                    },
+                }
+            });
+            const tdurs = document.querySelector('#tdurs');
+            new Chart(tdurs, {
+                type: 'bar',
+                data: {
+                    labels: tlable,
+                    datasets: [{
+                        label: 'activity',
+                        data: tdur,
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgba(223, 70, 149, 0.8)',
+                            'rgba(242, 54, 8, 0.72)',
+                            'rgba(226, 98, 217, 0.43)',
+                            'rgba(244, 151, 52, 0.91)',
+                            'rgba(32, 211, 194, 0.91)',
+                            'rgba(32, 211, 59, 0.39)',
+                            'rgba(127, 55, 209, 0.39)',
+                        ]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cardio Time',
+                                color: 'black',
+                                font: {
+                                    size: 18
+                                }
+                            },
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return value + ' min';
+                                }
+                            }
+                        },
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: "Today's Report",
+                                color: 'black',
+                                font: {
+                                    size: 16
+                                }
+                            }
                         }
                     }
                 }
-            });</script>
+            });
+
+            const caloriechart = document.querySelector('#calorieChart');
+            new Chart(caloriechart, {
+                type: 'line',
+                data: {
+                    labels: datearr,
+                    datasets: [{
+                        label: 'activity',
+                        data: caloriesarr,
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgba(223, 70, 149, 0.8)',
+                            'rgba(242, 54, 8, 0.72)',
+                            'rgba(226, 98, 217, 0.43)',
+                            'rgba(244, 151, 52, 0.91)',
+                            'rgba(32, 211, 194, 0.91)',
+                            'rgba(32, 211, 59, 0.39)',
+                            'rgba(127, 55, 209, 0.39)',
+                        ]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Calories',
+                                color: 'black',
+                                font: {
+                                    size: 18
+                                }
+                            },
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return value + ' cal';
+                                }
+                            }
+                        },
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Week Results',
+                                color: 'black',
+                                font: {
+                                    size: 16
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const durationchart = document.querySelector('#durationChart');
+            new Chart(durationchart, {
+                type: 'line',
+                data: {
+                    labels: datearr,
+                    datasets: [{
+                        label: 'activity',
+                        data: durationarr,
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgba(223, 70, 149, 0.8)',
+                            'rgba(242, 54, 8, 0.72)',
+                            'rgba(226, 98, 217, 0.43)',
+                            'rgba(244, 151, 52, 0.91)',
+                            'rgba(32, 211, 194, 0.91)',
+                            'rgba(32, 211, 59, 0.39)',
+                            'rgba(127, 55, 209, 0.39)',
+                        ]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Minutes',
+                                color: 'black',
+                                font: {
+                                    size: 18
+                                }
+                            },
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return value + ' min'; // Add 'min' after the numbers
+                                }
+                            }
+                        },
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Week Results',
+                                color: 'black',
+                                font: {
+                                    size: 16
+                                }
+                            }
+                        }
+                    },
+                }
+            })
+        </script>
 </body>
 
 </html>

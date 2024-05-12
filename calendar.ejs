@@ -25,7 +25,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <button onclick="togglePopup2()">Add Reminder</button>
+                    <button id="buttonsub" onclick="togglePopup2()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Add Reminder</button>
                 </div>
             </div>
         </div>
@@ -43,7 +48,12 @@
                     <input type="radio" id="no" name="input" value="no" />
                     <label for="no">No, I have not</label>
                     <br>
-                    <button type="submit">Submit</button>
+                    <button id="buttonsub" class="btnsub" type="submit">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Submit</button>
                 </form>
             </div>
         </div>
@@ -51,58 +61,109 @@
         <div class="popup2" id="popup-2">
             <div class="overlay2"></div>
             <div class="content2">
-                <div class="close-btn2" onclick="togglePopup2()">&times;</div>
+                <div class="close-btn2" onclick="togglePopup2()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                  </svg></div>
                 <h1>Setting up Reminder! </h1>
                 <form id="reminderForm">
                     <label for="date1">Date:</label>
                     <input type="date" id="date1">
-                    <br>
+                    
                     <label for="text1">Reminder Text:</label>
                     <input type="text" id="text1">
-                    <button type="submit">Submit</button>
+                    <button id="buttonsub" class="btnsub" type="submit">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Submit</button>
                 </form>
             </div>
         </div>
 
+        <div class="container" onclick="">
         <div id="eventModal" class="modal">
             <div class="modal-content">
                 <div class="overlay3"></div>
-                <span class="close">&times;</span>
+                <span class="close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                  </svg></span>
                 <input type="hidden" id="eventId">
                 <h2 id="eventTitle"></h2>
                 <p id="eventStart"></p>
                 <div class="row">
-                    <button class="editbtn" onclick="editReminders()">Edit</button>
-                    <button type="submit" class="deletebtn" onclick="deleteReminders()">Delete</button>
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                    <button id="editBtn" class="editbtn" onclick="handleModalClick()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>Edit</button>
+                    </div>
+                    <div class="col-4">
+                    <button id="deleteBtn" class="deletebtn" onclick="deleteReminders()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <p>Delete</p></button>
+                    </div>
+                    <div class="col-2"></div>
                 </div>
             </div>
         </div>
+    </div>
+
 
 
 
         <div id="eventModal2" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Edit Reminder</h2>
+                <span class="close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                  </svg></span>                
+                  <h2>Edit Reminder</h2>
                 <form id="editReminderForm">
-                    <input type="hidden" id="editEventId" name="editEventId" >
+                    <input type="hidden" id="editEventId" name="editEventId">
                     <br>
                     <label for="editDate">Date:</label>
                     <input type="date" id="editDate" name="editDate" required>
                     <br>
+                    <br>
                     <label for="editText">Text:</label>
                     <input type="text" id="editText" name="editText" required>
                     <br>
-                    <button type="submit">Save</button>
+                    <button id="buttonsub" type="submit">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Save</button>
                 </form>
             </div>
         </div>
-        
+
 
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/scripts/calendar.js"></script>
+        <script>
+            function handleModalClick() {
+            const eventTitle = document.getElementById('eventTitle').innerText;
+            updateButtons(eventTitle);
+            }
 
+        function updateButtons(eventTitle) {
+            const editBtn = document.getElementById('editBtn');
+            const deleteBtn = document.getElementById('deleteBtn');
+
+            if (eventTitle === 'Exercise') {
+            } else {
+
+                editReminders();
+            }
+        }      
+            </script>
 </body>
 
 </html>

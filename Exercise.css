@@ -1,7 +1,89 @@
-.formbtn{
+.formbtn {
     background-color: green;
     color: brown;
 }
-#containerExercise{
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: whitesmoke;
+}
+
+#containerExercise {
     display: none;
+}
+
+.unlist {
+    list-style: none;
+    position: relative;
+    width: 450px;
+    margin: 10px 10px;
+    padding: 10px;
+}
+
+.unlist .lister p {
+    display: flex;
+    background: rgba(18, 17, 17, 0.1);
+    padding: 10px 20px;
+    color: black;
+    margin: 10px 0;
+    transition: 0.1s;
+    box-sizing: border-box;
+    box-shadow: inset 2px 3px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.unlist .lister p:hover {
+    transform: scale(1.06);
+    background: rgba(18, 17, 17, 0.15);
+    color: #197bcbe9;
+}
+
+h2, h3, div label {
+    color: #1d3557;
+}
+
+#containerExercise {
+    width: 500px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+#containerExercise .unlist {
+    background: #eee;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+
+h2 {
+    margin: 5px;
+    padding: 6px;
+}
+
+#searchInput {
+    margin: 10px;
+    width: 250px;
+}
+
+.notfound{
+    margin-top: 10px;
+}
+.notfound a {
+    border: 1px solid gray;
+    background-color: rgba(18, 17, 17, 0.1);
+    color: black;
+    text-decoration: none;
+    border-radius: 20px;
+    margin-top: 10px;
+    display: inline-flex;
+}
+
+.notfound a:hover {
+    transform: scale(1.06);
+    background: rgba(18, 17, 17, 0.057);
+    color: #197bcb;
+    
 }

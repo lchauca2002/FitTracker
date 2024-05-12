@@ -6,24 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/styles/Exercise.css">
+    <link rel="stylesheet" href="/styles/Form2.css">
 </head>
 
 <body>
     <% layout('layouts/boilerplate') %>
-        <h1>Enter Data here</h1>
-        <h2>Search Here:</h2>
-        <input type="text" id="searchInput" onkeyup="filterResults()" placeholder="Search">
-        <h3>Matches Found Here:</h3>
-        <div id="containerExercise">
-            <% for(let workout of addSExercise){%>
-                <p class="exercise">
-                    <%= workout.name %>
-                </p>
-                <% } %>
-                    <p>Did not find what you are looking for? <a href="add_new_sworkout">Click Here to Add a new Workout</a></p>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2>Search Here:</h2>
+                    <input type="text" id="searchInput" onkeyup="filterResults()" placeholder="Search">
+                </div>
+                <div class="col-6"></div>
+            </div>
         </div>
 
-        <a href="/exerciselog">Back to Log</a>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div id="containerExercise">
+                        <ul class="unlist">
+                            <h3>Matches Found Here:</h3>
+                            <% for(let workout of addSExercise){%>
+                                <li class="lister">
+                                    <p class="exercise">
+                                        <%= workout.name %>
+                                    </p>
+                                </li>
+                                <% } %>
+                                    <p class="notfound">Did not find what you are looking for? 
+                                        <br>
+                                        <a href="add_new_sworkout">Click Here to Add a new Workout</a></p>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="FORM"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="btla"><a href="/exerciselog">Back to Log</a></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        
         <script src="/scripts/SearchS.js"></script>
 </body>
 

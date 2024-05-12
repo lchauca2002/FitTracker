@@ -47,17 +47,6 @@
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .popup2 .overlay2{
     position: fixed;
     top:0px;
@@ -75,12 +64,13 @@
     transform:translate(-50%,-50%) scale(0);
     background:#fff;
     width:450px;
-    height:220px;
+    height:250px;
     z-index: 2;
     text-align: center;
     padding:20px;
     box-sizing:border-box;
-
+    border: 1px solid black;
+    border-radius: 25px;
 }
 .popup2 .close-btn2{
     cursor: pointer;
@@ -89,14 +79,15 @@
     top:5px;
     width:30px;
     height:30px;
-    background:#222;
-    color:#fff;
     font-size:25px;
     font-weight:600;
     line-height:30px;
     text-align:center;
     border-radius: 50%;
 
+}
+.close-btn2:hover svg {
+    fill: red;
 }
 .popup2.active .overlay2{
     display: block;
@@ -108,74 +99,78 @@
 }
 
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
   }
   
-  /* Modal Content/Box */
   .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%; /* Could be more or less, depending on screen size */
+    /* width: 25%; */
   }
-  
-  /* Close Button */
+  #eventModal .modal-content{
+    width: 25%;
+    text-align: center;
+  }
+  #eventModal2 .modal-content {
+    width: 25%;
+    text-align: center;
+}
   .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
     color: black;
-    text-decoration: none;
-    cursor: pointer;
+    float: right;
+    font-size: 100px;
+    font-weight: bold;
+    width: 15px;
   }
+  .close:hover svg {
+    fill: red;
+}
   .modal-content .deletebtn , .modal-content .editbtn{
     width: 80px;
     height: 30px;
-    padding: 5px 10px;
+    padding: 5px 5px;
     font-size: 14px;
 }
 
 .row .editbtn, .row .deletebtn{
     margin: 10px;
 }
+#date1, #text1 {
+    display:flex;
+    margin: 0 auto;
+}
 
 .modal2 {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%; 
 }
 
-/* Close Button */
 .close {
     color: #aaa;
     float: right;
@@ -188,4 +183,27 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+
+#buttonsub, #editBtn,  #deleteBtn{
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: black;
+    font-size: 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    margin-top: 10px;
+    letter-spacing: 2px;
+    background-color: rgba(130, 210, 206, 0.799);
+}
+
+#buttonsub:hover, #editBtn:hover,  #deleteBtn:hover{
+    /* background: #03f484; */
+    /* color: #fff; */
+    border-radius: 5px;
+    box-shadow: 0 0 3px #197bcbe9, 0 0 9px #197bcbe9, 0 0 18px #197bcbe9, 0 0 100px #197bcbe9;
 }

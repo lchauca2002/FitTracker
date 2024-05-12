@@ -23,8 +23,27 @@ function filterResults() {
         }
         if (foundMatch) {
             containerExercise.style.display = 'block'; // Show the container
+            const noMatchesMessage = document.querySelector('#containerExercise > .unlist > .no-matches');
+            if (noMatchesMessage) {
+                noMatchesMessage.remove();
+                console.log("REMOVED!");
+            }
         } else {
-            containerExercise.style.display = 'none'; // Hide the container
+            const noMatchesMessage = document.querySelector('#containerExercise > .unlist > .no-matches');
+            if (noMatchesMessage) {
+                noMatchesMessage.remove();
+                console.log("REMOVED!");
+            }
+
+            // Add the "No Matches Found" message if it doesn't exist
+            const contain = document.querySelector('#containerExercise > .unlist');
+            const addp = document.createElement('p');
+            addp.textContent = "No Matches Found";
+            addp.classList.add('no-matches');
+            contain.insertBefore(addp, document.querySelector('.notfound')); // Insert before the first p element
+            console.log("ADDED");
+            // Hide the container
+            containerExercise.style.display = 'block'; 
         }
     }
 }
@@ -78,7 +97,7 @@ function showFormAndSelectExercise(selectedExercise) {
     
     // Exercisetype
     const divCol1 = document.createElement('div');
-    divCol1.classList.add('col-md-4');
+    divCol1.classList.add('col-md-6');
     const labelType = document.createElement('label');
     labelType.setAttribute('for', 'validationCustom01');
     labelType.textContent = 'Exercisetype';
@@ -95,9 +114,12 @@ function showFormAndSelectExercise(selectedExercise) {
     divCol1.appendChild(labelType);
     divCol1.appendChild(exercisetypeInput);
 
+    const divEmpty1 = document.createElement('div');
+    divEmpty1.classList.add('col-8');
+    
     // Exercisename 
     const divCol2 = document.createElement('div');
-    divCol2.classList.add('col-md-4');
+    divCol2.classList.add('col-md-6');
     const labelName = document.createElement('label');
     labelName.setAttribute('for', 'validationCustom02');
     labelName.textContent = 'Exercisename';
@@ -113,16 +135,18 @@ function showFormAndSelectExercise(selectedExercise) {
     divCol2.appendChild(labelName);
     divCol2.appendChild(exerciseInput);
 
-    // Empty column
-    const divEmpty = document.createElement('div');
-    divEmpty.classList.add('col-md-4');
+    const divEmpty2 = document.createElement('div');
+    divEmpty2.classList.add('col-md-8');
+
+    const userBoxdiv1 = document.createElement('div');
+    userBoxdiv1.classList.add('user-box');
 
     //NumOfSets
     const divCol3 = document.createElement('div');
-    divCol3.classList.add('col-md-4');
+    divCol3.classList.add('col-md-6');
     const labelNumOfSets = document.createElement('label');
     labelNumOfSets.setAttribute('for', 'validationCustom03');
-    labelNumOfSets.textContent = 'NumOfSets';
+    labelNumOfSets.textContent = 'Number Of Sets';
     labelNumOfSets.classList.add('form-label');
 
     const numofsetsInput = document.createElement('input');
@@ -130,21 +154,28 @@ function showFormAndSelectExercise(selectedExercise) {
     numofsetsInput.classList.add('form-control');
     numofsetsInput.id = 'validationCustom03';
     numofsetsInput.name = 'numofsets';
-    numofsetsInput.placeholder = 'Number Of Sets';
     numofsetsInput.setAttribute('required', '');
     const divfeedback = document.createElement('div');
     divfeedback.classList.add('invalid-feedback');
     divfeedback.textContent = 'Please provide valid numofsets.';
-    divCol3.appendChild(labelNumOfSets);
-    divCol3.appendChild(numofsetsInput);
-    divCol3.appendChild(divfeedback);
+    userBoxdiv1.appendChild(numofsetsInput);
+    userBoxdiv1.appendChild(labelNumOfSets);
+    userBoxdiv1.appendChild(divfeedback);
 
+    divCol3.appendChild(userBoxdiv1);
+
+    const divEmpty3 = document.createElement('div');
+    divEmpty3.classList.add('col-8');
+
+    const userBoxdiv2 = document.createElement('div');
+    userBoxdiv2.classList.add('user-box');
+    
     //Repetitions
     const divCol4 = document.createElement('div');
-    divCol4.classList.add('col-md-4');
+    divCol4.classList.add('col-md-6');
     const labelRepetitions = document.createElement('label');
     labelRepetitions.setAttribute('for', 'validationCustom04');
-    labelRepetitions.textContent = 'Repetitions';
+    labelRepetitions.textContent = 'Number of Repetitions';
     labelRepetitions.classList.add('form-label');
 
     const repetitionsInput = document.createElement('input');
@@ -152,18 +183,21 @@ function showFormAndSelectExercise(selectedExercise) {
     repetitionsInput.classList.add('form-control');
     repetitionsInput.id = 'validationCustom04';
     repetitionsInput.name = 'repetitions';
-    repetitionsInput.placeholder = 'Number of Repetitions';
     repetitionsInput.setAttribute('required', '');
     const divfeedback2 = document.createElement('div');
     divfeedback2.classList.add('invalid-feedback');
     divfeedback2.textContent = 'Please provide valid repetitions.';
-    divCol4.appendChild(labelRepetitions);
-    divCol4.appendChild(repetitionsInput);
-    divCol4.appendChild(divfeedback2);
+    userBoxdiv2.appendChild(repetitionsInput);
+    userBoxdiv2.appendChild(labelRepetitions);
+    userBoxdiv2.appendChild(divfeedback2);
 
-    // Empty column
-    const divEmpty2 = document.createElement('div');
-    divEmpty2.classList.add('col-12');
+    divCol4.appendChild(userBoxdiv2);
+
+    const divEmpty4 = document.createElement('div');
+    divEmpty4.classList.add('col-12');
+
+    const userBoxdiv3 = document.createElement('div');
+    userBoxdiv3.classList.add('user-box');
 
     //Weight
     const divCol5 = document.createElement('div');
@@ -178,34 +212,54 @@ function showFormAndSelectExercise(selectedExercise) {
     weightInput.classList.add('form-control');
     weightInput.id = 'validationCustom05';
     weightInput.name = 'weight';
-    weightInput.placeholder = 'Amount of Weight';
     weightInput.setAttribute('required', '');
     const divfeeback3 = document.createElement('div');
     divfeeback3.classList.add('invalid-feedback');
     divfeeback3.textContent = 'Please provide valid weight.';
-    divCol5.appendChild(labelWeight);
-    divCol5.appendChild(weightInput);
-    divCol5.appendChild(divfeeback3);
+    userBoxdiv3.appendChild(weightInput);
+    userBoxdiv3.appendChild(labelWeight);
+    userBoxdiv3.appendChild(divfeeback3);
+
+    divCol5.appendChild(userBoxdiv3);
 
     // Submit button
     const divCol6 = document.createElement('div');
     divCol6.classList.add('col-12');
     const submitButton = document.createElement('button');
-    submitButton.classList.add('btn', 'btn-primary');
+    submitButton.classList.add('btn', 'btn-secondary');
+    submitButton.setAttribute('id', 'buttonsub');
     submitButton.type = 'submit';
+    
     submitButton.textContent = 'Submit form';
+    span1 = document.createElement('span');
+    span2 = document.createElement('span');
+    span3 = document.createElement('span');
+    span4 = document.createElement('span');
+    submitButton.appendChild(span1);
+    submitButton.appendChild(span2);
+    submitButton.appendChild(span3);
+    submitButton.appendChild(span4);
     divCol6.appendChild(submitButton);
 
+    const divsubForm = document.createElement('div');
+    divsubForm.classList.add('subForm');
+    
+    form.appendChild(dateInput);
     form.appendChild(divCol1);
+    form.appendChild(divEmpty1);
     form.appendChild(divCol2);
-    form.appendChild(divEmpty);
-    form.appendChild(divCol3);
-    form.appendChild(divCol4);
     form.appendChild(divEmpty2);
+    form.appendChild(divCol3);
+    form.appendChild(divEmpty3);
+    form.appendChild(divCol4);
+    form.appendChild(divEmpty4);
     form.appendChild(divCol5);
     form.appendChild(divCol6);
 
-    document.body.appendChild(form);
+    divsubForm.appendChild(form);
+    document.body.appendChild(divsubForm);
+    
+    document.querySelector('#FORM').appendChild(divsubForm);
     existingForm = form;
 
     form.addEventListener('submit', function (event) {
@@ -216,8 +270,10 @@ function showFormAndSelectExercise(selectedExercise) {
             if (!input.value.trim()) {
                 emptyF = true;
                 input.classList.add('is-invalid');
+                input.classList.remove('is-valid');
             } else {
                 input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
             }
         });
         if (emptyF) {

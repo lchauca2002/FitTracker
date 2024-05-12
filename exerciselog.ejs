@@ -11,141 +11,197 @@
 <body id="body" onload="updateDateTime()">
     <% layout('layouts/boilerplate') %>
         <span id="datetime"></span>
-        <table class="WorkoutLogger">
-            <thead>
-                <tr>
-                    <th scope="col" class="topRow">Activity Name</th>
-                    <th scope="col" class="topRow">Duration</th>
-                    <th scope="col" class="topRow">Calories burned</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% let totalTime=0, totalCalories=0; %>
-                    <% for(let workout of exerciseLog){ %>
-                        <% if (workout.exercisetype==='cardio' ) { %>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-9">
+                    <table class="WorkoutLogger">
+                        <thead>
                             <tr>
-
-                                <td class="trow"
-                                    onclick="editExercise('<%= workout.id %>', '<%= workout.exercisetype %>', '<%= workout.exercisename %>', '<%= workout.duration %>', '<%= workout.calories %>')">
-                                    <%= workout.exercisename %>
-                                </td>
-                                <td class="trow">
-                                    <%= workout.duration %> min
-                                </td>
-                                <td class="trow">
-                                    <%= workout.calories %>
-                                </td>
-                                <td class="trow">
-                                    <%= workout.author.username %>
-                                </td>
-                                <td class="deleterow">
-                                    <form id="deleteForm" action="/exerciselog/?_method=delete" method="post">
-                                        <input type="hidden" id="id" name="id" value="<%= workout.id %>">
-                                        <button type="submit">Delete</button>
-                                    </form>
-                                </td>
-                                <% totalTime +=workout.duration;%>
-                                    <% totalCalories +=workout.calories;%>
+                                <th scope="col" class="topRow">Activity Name</th>
+                                <th scope="col" class="topRow">Duration</th>
+                                <th scope="col" class="topRow">Calories burned</th>
                             </tr>
-                            <% } %>
-                                <% } %>
-                                    <tr class="bottom">
-                                        <td class="addExercise"><a href="add_to_log">Add Exercise</a></td>
-                                    </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td>
-                        <span class="Daily">Total: <%= totalTime %>(Minutes)</span>
-                        <span class="Goal">Total: <%= totalCalories %>(Calories)</span>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        <div id="editForm" style="display: none;">
-            <form id="exerciseForm" onsubmit="submitForm(); return false;">
-                <input type="hidden" id="editId" name="editId">
-                <input type="hidden" id="editType" name="editType">
-                <input type="hidden" id="editName" name="editName">
-                <label for="editDuration">Duration:</label>
-                <input type="number" id="editDuration" name="editDuration" required>
-                <label for="editCalories">Calories burned:</label>
-                <input type="number" id="editCalories" name="editCalories" required>
-                <button type="submit">Save</button>
-            </form>
-            <a id="linkToHideForm" href="#" onclick="hideFormOnClick('editForm')">Hide Form</a>
+                        </thead>
+                        <tbody>
+                            <% let totalTime=0, totalCalories=0; %>
+                                <% for(let workout of exerciseLog){ %>
+                                    <% if (workout.exercisetype==='cardio' ) { %>
+                                        <tr>
+
+                                            <td class="trow"
+                                                onclick="editExercise('<%= workout.id %>', '<%= workout.exercisetype %>', '<%= workout.exercisename %>', '<%= workout.duration %>', '<%= workout.calories %>')">
+                                                <%= workout.exercisename %>
+                                            </td>
+                                            <td class="trow">
+                                                <%= workout.duration %> min
+                                            </td>
+                                            <td class="trow">
+                                                <%= workout.calories %>
+                                            </td>
+                                            <td class="deleterow">
+                                                <form id="deleteForm" action="/exerciselog/?_method=delete"
+                                                    method="post">
+                                                    <input type="hidden" id="id" name="id" value="<%= workout.id %>">
+                                                    <button class="delete-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                                      </svg></button>
+                                                </form>
+                                            </td>
+                                            <% totalTime +=workout.duration;%>
+                                                <% totalCalories +=workout.calories;%>
+                                        </tr>
+                                        <% } %>
+                                            <% } %>
+                                                <tr class="bottom">
+                                                    <td class="addExercise"><a href="add_to_log">
+                                                        <span></span>
+                                                        <span></span>
+                                                        <span></span>
+                                                        <span></span>
+                                                        Add Exercise</a></td>
+                                                </tr>
+                                                
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="totals"></td>
+                                <td class="totalrow">
+                                    <span>Total:</span>
+                                    <span class="Daily"><%=totalTime %>(Minutes)</span>
+                                </td>
+                                <td class="totalrow">
+                                    <span>Total:</span>
+                                    <span class="Goal"><%=totalCalories %>(Calories)</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="col-3">
+                    <div id="editForm" class="exerciseForm" style="display: none;">
+                        <form id="exerciseForm" onsubmit="submitForm(); return false;">
+                            <input type="hidden" id="editId" name="editId">
+                            <input type="hidden" id="editType" name="editType">
+                            <input type="hidden" id="editName" name="editName">
+                            <div class="user-box">
+                                <input type="number" id="editDuration" name="editDuration" required>
+                                <label for="editDuration">Duration:</label>
+                            </div>
+                            <div class="user-box">
+                                <input type="number" id="editCalories" name="editCalories" required>
+                                <label for="editCalories">Calories burned:</label>
+                            </div>
+                            <button class="btn btn-secondary" type="submit" id="buttonsub">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Save</button>
+                        </form>
+                        <a id="linkToHideForm" href="#" onclick="hideFormOnClick('editForm')">Hide Form</a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-
-
 
         <br>
-        <table class="WorkoutLogger">
-            <thead>
-                <tr>
-                    <th scope="col" class="topRow">Activity Name</th>
-                    <th scope="col" class="topRow">NumOfSets</th>
-                    <th scope="col" class="topRow">Repetitions</th>
-                    <th scope="col" class="topRow">Weight</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for(let workout of exerciseLog){ %>
-                    <% if (workout.exercisetype==='strength' ) { %>
-                        <tr>
 
-                            <td class="trow" onclick="editstrengthExercise('<%=workout.id %>', '<%=workout.exercisetype %>','<%=workout.exercisename %>', 
+        <div class="container">
+            <div class="row">
+                <div class="col-9">
+                    <table class="WorkoutLogger">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="topRow">Activity Name</th>
+                                <th scope="col" class="topRow">NumOfSets</th>
+                                <th scope="col" class="topRow">Repetitions</th>
+                                <th scope="col" class="topRow">Weight</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let workout of exerciseLog){ %>
+                                <% if (workout.exercisetype==='strength' ) { %>
+                                    <tr>
+
+                                        <td class="trow" onclick="editstrengthExercise('<%=workout.id %>', '<%=workout.exercisetype %>','<%=workout.exercisename %>', 
                     '<%=workout.numofsets %>', '<%=workout.repetitions %>', '<%=workout.weight %>')">
-                                <%= workout.exercisename %>
-                            </td>
-                            <td class="trow">
-                                <%= workout.numofsets %>
-                            </td>
-                            <td class="trow">
-                                <%= workout.repetitions %>
-                            </td>
-                            <td class="trow">
-                                <%= workout.weight %> lbs
-                            </td>
-                            <td class="deleterow">
-                                <form id="deleteForm" action="/exerciselog/?_method=delete" method="post">
-                                    <input type="hidden" id="id" name="id" value="<%= workout.id %>">
-                                    <button type="submit">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <% } %>
-                            <% } %>
-                                <tr class="bottom">
-                                    <td class="addExercise"><a href="add_to_strength">Add Exercise</a></td>
-                                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        <div id="editstrengthForm" style="display: none;">
-            <form id="exerciseForm" onsubmit="submitstrengthForm(); return false;">
-                <input type="hidden" id="editId" name="editId">
-                <input type="hidden" id="editType" name="editType">
-                <input type="hidden" id="editName" name="editName">
+                                            <%= workout.exercisename %>
+                                        </td>
+                                        <td class="trow">
+                                            <%= workout.numofsets %>
+                                        </td>
+                                        <td class="trow">
+                                            <%= workout.repetitions %>
+                                        </td>
+                                        <td class="trow">
+                                            <%= workout.weight %> lbs
+                                        </td>
+                                        <td class="deleterow">
+                                            <form id="deleteForm" action="/exerciselog/?_method=delete" method="post">
+                                                <input type="hidden" id="id" name="id" value="<%= workout.id %>">
+                                                <button class="delete-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                                  </svg></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                        <% } %>
+                                            <tr class="bottom">
+                                                <td class="addExercise"><a href="add_to_strength">Add Exercise</a></td>
+                                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <!-- <td>
+                                </td> -->
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="col-3">
+                    <div id="editstrengthForm" class='exerciseForm' style="display: none;">
+                        <form id="exerciseForm" onsubmit="submitstrengthForm(); return false;">
 
-                <label for="editNumofsets">NumOfSets:</label>
-                <input type="number" id="editNumofsets" name="editNumofsets" required>
+                            <input type="hidden" id="editId" name="editId">
+                            <input type="hidden" id="editType" name="editType">
+                            <input type="hidden" id="editName" name="editName">
 
-                <label for="editRepetitions">Repetitions:</label>
-                <input type="number" id="editRepetitions" name="editRepetitions" required>
-
-                <label for="editWeight">Weight:</label>
-                <input type="number" id="editWeight" name="editWeight" required><span>lbs</span>
-                <button type="submit">Save</button>
-            </form>
-            <a id="linkToHideForm" href="#" onclick="hideFormOnClick('editstrengthForm')">Hide Form</a>
+                            <div class="user-box">
+                                <input type="number" id="editNumofsets" name="editNumofsets" required>
+                                <label for="editNumofsets">NumOfSets:</label>
+                            </div>
+                            <div class="user-box">
+                                <input type="number" id="editRepetitions" name="editRepetitions" required>
+                                <label for="editRepetitions">Repetitions:</label>
+                            </div>
+                            <div class="user-box">
+                                <input type="number" id="editWeight" name="editWeight" required><span>lbs</span>
+                                <label for="editWeight">Weight:</label>
+                            </div>
+                            <div class="user-box">
+                                <button class="btn btn-secondary" type="submit" id="buttonsub">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    Save</button>
+                            </div>
+                        </form>
+                        <a id="linkToHideForm" href="#" onclick="hideFormOnClick('editstrengthForm')">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Hide Form</a>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
         <script src="/scripts/exerciselog.js"></script>
 </body>
 

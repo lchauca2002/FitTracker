@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" id="defaultNav">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Fit Tracker</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -10,6 +10,9 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/calendar">Check In</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -17,14 +20,15 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/exerciselog">Exercise Log</a></li>
+                        <li><a class="dropdown-item" href="/view_full_report">Diary Report</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/progress">Progress</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="/financials">Financials</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="/findnearyou">Search</a>
                 </li>
@@ -41,6 +45,7 @@
                         id="Signup">Sign Up</button>
                     </a>
                     <% } else { %>
+                    <p> Welcome, <%= currentUser.username %></p>
                     <a class="nav-link" href="/logout">
                         <button type="button" class="btn btn-secondary btn-sm" onclick=""
                             id="logout">Logout</button>

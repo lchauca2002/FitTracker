@@ -1,0 +1,6 @@
+#defaultNav a, #defaultNav p{
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    letter-spacing: 3px;
+}

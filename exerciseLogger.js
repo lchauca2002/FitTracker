@@ -18,40 +18,34 @@ const exerciseLogSchema = new Schema({
     duration: {
         type: Number,
         required: function () {
-            return this.exerciseType === 'cardio';
+            return this.exercisetype === 'cardio';
         }
     },
     calories: {
         type: Number,
         required: function () {
-            return this.exerciseType === 'cardio'; // Require only for cardio
-        }
-    },
-    strengthname: {
-        type: String,
-        required: function () {
-            return this.exerciseType === 'strength'; // Require only for strength
+            return this.exercisetype === 'cardio'; // Require only for cardio
         }
     },
     numofsets: {
         type: Number,
         required: function () {
-            return this.exerciseType === 'strength'; // Require only for strength
+            return this.exercisetype === 'strength'; // Require only for strength
         }
     },
     repetitions: {
         type: Number,
         required: function () {
-            return this.exerciseType === 'strength'; // Require only for strength
+            return this.exercisetype === 'strength'; // Require only for strength
         }
     },
     weight: {
         type: Number,
         required: function () {
-            return this.exerciseType === 'strength'; // Require only for strength
+            return this.exercisetype === 'strength'; // Require only for strength
         }
     },
-    autho: {
+    author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }

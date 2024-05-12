@@ -78,7 +78,13 @@ exerciseForm.addEventListener('submit', function (event) {
 });
 
 window.onload = function () {
-    togglePopup();
+    const today = new Date().toISOString().substring(0, 10);
+    const lastShownDate = localStorage.getItem('ExerciseDate');
+    console.log(lastShownDate);
+    if (!lastShownDate || lastShownDate !== today) {
+        togglePopup();
+        localStorage.setItem('ExerciseDate', today);
+    }
 };
 
 function addDay(select) {
@@ -91,7 +97,7 @@ function addDay(select) {
         backgroundColor: '#FFA500',
     }
     if (select === 'yes') {
-        calendar.addEvent(event);
+        addReminders(utcDate, 'Exercise');
     } else {
         console.log("Sorry, but you did not exercise today");
     }
@@ -142,13 +148,23 @@ reminderForm.addEventListener('submit', function (event) {
 });
 function addReminders(dateValue, reminderText) {
     var date = new Date(dateValue);
-  var event = {
-        title: 'Reminders: ' + reminderText,
-        start: date,
-        allDay: true,
-        backgroundColor: '#89CFF0',
-        borderColor: '#89CFF0',
-    };
+  if (reminderText === 'Exercise') {
+        var event = {
+            title: reminderText,
+            start: date,
+            allDay: true,
+            backgroundColor: '#FFA500',
+            borderColor: '#FFA500',
+        };
+    } else {
+        var event = {
+            title: 'Reminder: ' + reminderText,
+            start: date,
+            allDay: true,
+            backgroundColor: '#89CFF0',
+            borderColor: '#89CFF0',
+        };
+    }
 
     fetch('/calendar', {
         method: 'POST',
@@ -322,6 +338,12 @@ function fetchRemindersAndAddToCalendar() {
         })
         .then(reminders => {
             reminders.forEach(reminder => {
+                var eventColor;
+                if (reminder.title === 'Exercise') {
+                    eventColor = '#FFA500';
+                } else {
+                    eventColor = '#89CFF0';
+                }
                 calendar.addEvent({
                     id: reminder._id,
                     title: reminder.title,

@@ -5,51 +5,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/styles/Form.css">
+
 </head>
 
 <body>
     <% layout('layouts/boilerplate') %>
-        <h1>Add Workout</h1>
-        <form action="/exerciselog" method="post" class="row g-3 needs-validation" novalidate>
-            <input type="hidden" name="date" value="dateInput" required>
-            <input type="hidden" name="exercisetype" value="strength" required>
-            <div class="col-md-4">
-                <label for="validationCustom01" class="form-label">Exercise Name</label>
-                <input type="text" class="form-control" id="validationCustom01" name="exercisename" required>
-                <div class="invalid-feedback">
-                    Please provide a exercise name.
+        <div class="subForm">
+            <h1>Add Strength Workout</h1>
+            <br>
+            <form action="/exerciselog" method="post" class="row g-3 needs-validation" novalidate>
+                <input type="hidden" name="date" value="dateInput" required>
+                <input type="hidden" name="exercisetype" value="strength" required>
+                <div class="col-md-4">
+                    <div class="user-box">
+                        <input type="text" class="form-control" id="validationCustom01" name="exercisename" required>
+                        <label for="validationCustom01" class="form-label">Exercise Name</label>
+                        <div class="invalid-feedback">
+                            Please provide a exercise name.
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <label for="validationCustom02" class="form-label">Number Of Sets</label>
-                <input type="text" class="form-control" id="validationCustom02" name="numofsets" required>
-                <div class="invalid-feedback">
-                    Please provide number of sets.
+                <div class="col-8"></div>
+                <div class="col-md-4">
+                    <div class="user-box">
+                        <input type="number" class="form-control" id="validationCustom02" name="numofsets" required>
+                        <label for="validationCustom02" class="form-label">Number Of Sets</label>
+                        <div class="invalid-feedback">
+                            Please provide number of sets.
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <label for="validationCustom03" class="form-label"># of Repetitions</label>
-                <input type="text" class="form-control" id="validationCustom03" name="repetitions" required>
-                <div class="invalid-feedback">
-                    Please provide number of repetitions.
+                <div class="col-8"></div>
+                <div class="col-md-4">
+                    <div class="user-box">
+                        <input type="number" class="form-control" id="validationCustom03" name="repetitions" required>
+                        <label for="validationCustom03" class="form-label"># of Repetitions</label>
+                        <div class="invalid-feedback">
+                            Please provide number of repetitions.
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <label for="validationCustom05" class="form-label">Weight</label>
-                <input type="text" class="form-control" id="validationCustom05" name="weight" required>
-                <div class="invalid-feedback">
-                    Please provide the weight.
+                <div class="col-8"></div>
+                <div class="col-md-4">
+                    <div class="user-box">
+                        <input type="number" class="form-control" id="validationCustom05" name="weight" required>
+                        <label for="validationCustom05" class="form-label">Weight</label>
+                        <div class="invalid-feedback">
+                            Please provide the weight.
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4"></div>
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit">Submit form</button>
-            </div>
-        </form>
-        <a href="/add_to_strength">Return to adding a workout</a>
-        <br>
-        <a href="/exerciselog">Return to Log</a>
+                <div class="col-12">
+                    <button class="btn btn-secondary" id="buttonsub" type="submit">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>Submit form</button>
+                </div>
+                <div class="col-6">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <a href="/add_to_strength">Return to adding a workout</a>
+                </div>
+                <div class="col-6">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span> <a href="/exerciselog">Return to Exercise Log</a>
+
+                </div>
+            </form>
+        </div>
+
         <script src="/scripts/newDate.js"></script>
 </body>
 

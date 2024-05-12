@@ -24,9 +24,27 @@ function filterResults() {
             }
         }
         if (foundMatch) {
-            containerExercise.style.display = 'block'; // Show the container
+            containerExercise.style.display = 'block';
+
+            const noMatchesMessage = document.querySelector('#containerExercise > .unlist > .no-matches');
+            if (noMatchesMessage) {
+                noMatchesMessage.remove();
+                console.log("REMOVED!");
+            }
         } else {
-            containerExercise.style.display = 'none'; // Hide the container
+            const noMatchesMessage = document.querySelector('#containerExercise > .unlist > .no-matches');
+            if (noMatchesMessage) {
+                noMatchesMessage.remove();
+                console.log("REMOVED!");
+            }
+
+            const contain = document.querySelector('#containerExercise > .unlist');
+            const addp = document.createElement('p');
+            addp.textContent = "No Matches Found";
+            addp.classList.add('no-matches');
+            contain.insertBefore(addp, document.querySelector('.notfound'));
+            console.log("ADDED");
+            containerExercise.style.display = 'block';
         }
     }
 }
@@ -81,7 +99,7 @@ function showFormAndSelectExercise(selectedExercise) {
 
     // Exercisetype input
     const divCol1 = document.createElement('div');
-    divCol1.classList.add('col-md-4');
+    divCol1.classList.add('col-md-6');
     const labelType = document.createElement('label');
     labelType.setAttribute('for', 'validationCustom01');
     labelType.textContent = 'Exercisetype';
@@ -100,9 +118,12 @@ function showFormAndSelectExercise(selectedExercise) {
     divCol1.appendChild(labelType);
     divCol1.appendChild(exercisetypeInput);
 
+    const divEmpty1 = document.createElement('div');
+    divEmpty1.classList.add('col-md-8');
+    
     // Exercisename input
     const divCol2 = document.createElement('div');
-    divCol2.classList.add('col-md-4');
+    divCol2.classList.add('col-md-6');
     const labelName = document.createElement('label');
     labelName.setAttribute('for', 'validationCustom02');
     labelName.textContent = 'Exercisename';
@@ -117,17 +138,19 @@ function showFormAndSelectExercise(selectedExercise) {
     exerciseInput.readOnly = true;
     divCol2.appendChild(labelName);
     divCol2.appendChild(exerciseInput);
+    
+    const divEmpty2 = document.createElement('div');
+    divEmpty2.classList.add('col-md-8');
 
-    // Empty column
-    const divEmpty = document.createElement('div');
-    divEmpty.classList.add('col-md-4');
-
+    const userBoxdiv1 = document.createElement('div');
+    userBoxdiv1.classList.add('user-box');
+    
     // Duration input
     const divCol3 = document.createElement('div');
-    divCol3.classList.add('col-md-4');
+    divCol3.classList.add('col-md-6');
     const labelDuration = document.createElement('label');
     labelDuration.setAttribute('for', 'validationCustom03');
-    labelDuration.textContent = 'Duration';
+    labelDuration.textContent = 'Workout Duration';
     labelDuration.classList.add('form-label');
     //durationInput
     const durationInput = document.createElement('input');
@@ -135,21 +158,28 @@ function showFormAndSelectExercise(selectedExercise) {
     durationInput.classList.add('form-control');
     durationInput.id = 'validationCustom03';
     durationInput.name = 'duration';
-    durationInput.placeholder = 'Workout duration';
     durationInput.setAttribute('required', '');
     const divDurationFeedback = document.createElement('div');
     divDurationFeedback.classList.add('invalid-feedback');
     divDurationFeedback.textContent = 'Please provide a valid duration.';
-    divCol3.appendChild(labelDuration);
-    divCol3.appendChild(durationInput);
-    divCol3.appendChild(divDurationFeedback);
+    userBoxdiv1.appendChild(durationInput);
+    userBoxdiv1.appendChild(labelDuration);
+    userBoxdiv1.appendChild(divDurationFeedback);
+
+    divCol3.appendChild(userBoxdiv1);
+    
+    const divEmpty3 = document.createElement('div');
+    divEmpty3.classList.add('col-md-8');
+
+    const userBoxdiv2 = document.createElement('div');
+    userBoxdiv2.classList.add('user-box');
 
     // Calories input
     const divCol4 = document.createElement('div');
-    divCol4.classList.add('col-md-4');
+    divCol4.classList.add('col-md-6');
     const labelCalories = document.createElement('label');
     labelCalories.setAttribute('for', 'validationCustom04');
-    labelCalories.textContent = 'Calories';
+    labelCalories.textContent = 'Calories burned';
     labelCalories.classList.add('form-label');
 
     const caloriesInput = document.createElement('input');
@@ -157,37 +187,59 @@ function showFormAndSelectExercise(selectedExercise) {
     caloriesInput.classList.add('form-control');
     caloriesInput.id = 'validationCustom04';
     caloriesInput.name = 'calories';
-    caloriesInput.placeholder = 'Calories burned';
     caloriesInput.setAttribute('required', '');
     const divCaloriesFeedback = document.createElement('div');
     divCaloriesFeedback.classList.add('invalid-feedback');
     divCaloriesFeedback.textContent = 'Please provide valid calories.';
-    divCol4.appendChild(labelCalories);
-    divCol4.appendChild(caloriesInput);
-    divCol4.appendChild(divCaloriesFeedback);
+    serBoxdiv2.appendChild(caloriesInput);
+    userBoxdiv2.appendChild(labelCalories);
+    userBoxdiv2.appendChild(divCaloriesFeedback);
 
-    // Empty column
-    const divEmpty2 = document.createElement('div');
-    divEmpty2.classList.add('col-12');
+    divCol4.appendChild(userBoxdiv2);
+    
+    const divEmpty4 = document.createElement('div');
+    divEmpty4.classList.add('col-12');
 
     // Submit button
     const divCol5 = document.createElement('div');
     divCol5.classList.add('col-12');
     const submitButton = document.createElement('button');
-    submitButton.classList.add('btn', 'btn-primary');
+    submitButton.classList.add('btn', 'btn-secondary');
+    submitButton.setAttribute('id', 'buttonsub');
     submitButton.type = 'submit';
+    
     submitButton.textContent = 'Submit form';
+    span1 = document.createElement('span');
+    span2 = document.createElement('span');
+    span3 = document.createElement('span');
+    span4 = document.createElement('span');
+    submitButton.appendChild(span1);
+    submitButton.appendChild(span2);
+    submitButton.appendChild(span3);
+    submitButton.appendChild(span4);
     divCol5.appendChild(submitButton);
 
+    const divsubForm = document.createElement('div');
+    divsubForm.classList.add('subForm');
+
+
+    form.appendChild(dateInput);
     form.appendChild(divCol1);
+    form.appendChild(divEmpty1);
     form.appendChild(divCol2);
-    form.appendChild(divEmpty);
-    form.appendChild(divCol3);
-    form.appendChild(divCol4);
     form.appendChild(divEmpty2);
+    form.appendChild(divCol3);
+    form.appendChild(divEmpty3);
+    form.appendChild(divCol4);
+    form.appendChild(divEmpty4);
     form.appendChild(divCol5);
 
-    document.body.appendChild(form);
+    divsubForm.appendChild(form);
+    document.body.appendChild(divsubForm);
+
+    
+
+    document.querySelector('#FORM').appendChild(divsubForm);
     existingForm = form;
 
     form.addEventListener('submit', function (event) {
@@ -197,8 +249,10 @@ function showFormAndSelectExercise(selectedExercise) {
             if (!input.value.trim()) {
                 emptyF = true;
                 input.classList.add('is-invalid');
+                input.classList.remove('is-valid');
             } else {
                 input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
             }
         });
         if (emptyF) {

@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
     $('.exercise').hide();
     
@@ -31,7 +30,11 @@ $(document).ready(function() {
         } else {
             toDate = null;
         }
-
+// Check if both "From" and "To" dates are selected
+if (!fromDate || !toDate) {
+    alert("Please select both 'From' and 'To' dates.");
+    return;
+}
         const cChecked = $('#cardio').is(':checked');
         const sChecked = $('#strength').is(':checked');
         const data ={};
@@ -47,14 +50,23 @@ $(document).ready(function() {
         if(sChecked){
             data.strength = 'strength';
         }
+
+        // Ajax call to get filtered data
         $.ajax({
             url: '/view_full_report',
             method: 'GET',
             data: data,
             success: function(response) {
-                $('#exerciseList').html($(response).find('#exerciseList').html());
-                $('.exercise').show();
+                let filteredData = $(response).find('#exerciseList').html();
+                renderFilteredData(filteredData);
             }
         });
     });
+
+    // Function to render filtered data
+    function renderFilteredData(filteredData) {
+        $('#exerciseList').html(filteredData);
+        $('.exercise').show();
+    }
 });
+

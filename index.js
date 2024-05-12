@@ -8,26 +8,33 @@ const elSchema = require('./schemaJoi.js');
 const catchAsync = require('./utils/catchAsync');
 const exerciselogRoutes = require('./routes/exerciselog');
 const usersRoutes = require('./routes/users');
+const viewFullReportRoute = require('./routes/view_full_report');
+const findnearyouRoute = require('./routes/findnearyou');
 const ejsmate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const { isLoggedIn } = require('./middleware.js');
+const reminders = require('./models/reminders');
 
 mongoose.set('strictQuery', true);
 const cardioExercise = require('./models/cardioExercise');
 const strengthExercise = require('./models/strengthExercise');
+const exerciseLogger = require('./models/exerciseLogger');
 const ExpressError = require("./utils/ExpressError");
+const { get } = require("http");
 
 mongoose.connect('mongodb://127.0.0.1:27017/FitTracker')
-    .then(()=>{
+    .then(() => {
         console.log('Mongo Connection Open!');
     })
-    .catch(err=>{
+    .catch(err => {
         console.log('Oh No! Mongo connection error');
         console.log(err);
     })
+
 
 app.engine('ejs', ejsmate)
 app.set('view engine', 'ejs');
@@ -110,6 +117,11 @@ app.get('/progress', isLoggedIn, async (req, res) => {
     res.render('progress', { exerciseLog });
 });
 
+
+
+
+
+
 app.get('/calendar',isLoggedIn, async (req, res) => {
     res.render('calendar');
 });
@@ -117,20 +129,22 @@ app.get('/calendar',isLoggedIn, async (req, res) => {
 app.get('/reminders', isLoggedIn, async (req, res) => {
     const remindersData = await reminders.find({ author: req.user._id });
     res.json(remindersData);
-
 });
+
 app.post('/calendar', isLoggedIn, async (req, res) => {
     const eventData = req.body;
     eventData.author = req.user._id;
     const newEvent = await reminders.create(eventData);
     res.status(200).json(newEvent);
 });
+
 app.put('/calendar', isLoggedIn, async (req, res) => {
     const eventId = req.body.eventId;
     const eventData = req.body;
     const updatedEvent = await reminders.findOneAndUpdate({ _id: eventId, author: req.user._id }, eventData, { new: true });
     res.status(200).json(updatedEvent);
 });
+
 app.delete('/calendar', isLoggedIn, async (req, res) => {
     const eventId = req.body.eventId;
     const deletedEvent = await reminders.findOneAndDelete({ _id: eventId, author: req.user._id });
@@ -139,10 +153,6 @@ app.delete('/calendar', isLoggedIn, async (req, res) => {
 //allows us to see caloricbalance
 app.get('/caloricbalance',(req,res)=>{
     res.render('caloricbalance.ejs');
-})
-//allows us to see financials
-app.get('/financials',(req,res)=>{
-    res.render('financials');
 })
 
 app.all('*', (req,res,next)=>{

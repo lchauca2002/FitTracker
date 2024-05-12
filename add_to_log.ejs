@@ -5,28 +5,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="Exercise.css">
+    <link rel="stylesheet" href="/styles/Exercise.css">
+    <link rel="stylesheet" href="/styles/Form2.css">
 </head>
 
 <body>
     <% layout('layouts/boilerplate') %>
-        <h1>Enter Data here</h1>
-        <h2>Search Here:</h2>
-        <input type="text" id="searchInput" onkeyup="filterResults()" placeholder="Search">
-        <h3>Matches Found Here:</h3>
-        <div id="containerExercise">
-            <% for(let workout of addExercise){%>
-                <p class="exercise">
-                    <%= workout.name %>
-                </p>
-                <% } %>
-                    <p>Did not find what you are looking for? <a href="add_new_workout">Click Here to Add a new
-                            Workout</a></p>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2>Search Here:</h2>
+                    <input type="text" id="searchInput" onkeyup="filterResults()" placeholder="Search">
+                </div>
+                <div class="row">
+                    <div class="col-6"></div>
+                </div>
+            </div>
         </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div id="containerExercise">
+                        <ul class="unlist">
+                            <h3>Matches Found Here:</h3>
+                            <% for(let workout of addExercise) { %>
+                                <li class="lister">
+                                    <p class="exercise">
+                                        <%= workout.name %>
+                                    </p>
+                                </li>
+                                <% } %>
+                                    <p class="notfound"> Did Not Find What You Were Looking For?
+                                        <br>
+                                        <a href=add_new_workout>Click Here to Add a new Workout</a></p>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="FORM"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="btla">
+                        <a href="/exerciselog">Back to Log</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <br>
-        <a href="/exerciselog">Go Back to Log</a>
+        
+        
+
+
+
         <script src="/scripts/Search.js"></script>
-       
+
 </body>
 
 </html>

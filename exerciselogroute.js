@@ -43,6 +43,17 @@ router.get('/', isLoggedIn, catchAsync(async (req, res) => {
     res.render('exerciselog', { exerciseLog });
 }))
 
+const date = new Date().toLocaleDateString();
+const nextday = new Date();
+nextday.setDate(nextday.getDate() + 1);
+const nextdaystring = nextday.toLocaleDateString();
+
+
+router.get('/', isLoggedIn, catchAsync(async (req, res) => {
+    const exerciseLog = await exerciseLogger.find({date:{ $gte: new Date(date), $lt: new Date(nextdaystring)}, author:req.user}).populate('author');
+    res.render('exerciselog', { exerciseLog });
+}))
+
 
 //this post functions as the top 2 post i had previously
 router.post('/', isLoggedIn, validateExercsieLogSchema , catchAsync(async (req, res) => {
@@ -73,7 +84,7 @@ router.post('/', isLoggedIn, validateExercsieLogSchema , catchAsync(async (req, 
         }
     }else if(exercisetype === 'strength'){
         const strengthExists = await strengthExercise.exists({ name: req.body.exercisename });
-
+        
         //Checking if Strength name exists
         if(strengthExists){
             //Strength exists add to log only
@@ -83,12 +94,12 @@ router.post('/', isLoggedIn, validateExercsieLogSchema , catchAsync(async (req, 
             console.log('Strength Exercise Logged:', newLog);
         }else {
             const newExercise = new strengthExercise({name: req.body.exercisename});
-            newLog.author = req.user._id;
             await newExercise.save();
             console.log('New Strength Exercise added:', newExercise);
 
             //Log
             const newLog = new exerciseLogger(req.body);
+            newLog.author = req.user._id;
             await newLog.save();
             console.log('Strength Exercise Logged:', newLog);
         }
@@ -100,6 +111,8 @@ router.post('/', isLoggedIn, validateExercsieLogSchema , catchAsync(async (req, 
     req.flash('success', 'Successfully Added a Exercise to the Log');
     res.redirect('/exerciselog');
 }))
+
+
 
 //Allows us to update our exerciseLogger wether it is a cardio or a strength workout
 router.put('/', isLoggedIn, updateExercsieLogSchema , catchAsync(async (req, res) => {

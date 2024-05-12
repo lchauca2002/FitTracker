@@ -10,8 +10,9 @@ updateDateTime();
 // Use setInterval to update the time continuously
 setInterval(updateDateTime, 1000);
 
-function editExercise(id, name, duration, calories) {
+function editExercise(id, type, name, duration, calories) {
     document.querySelector('#editId').value = id;
+    document.querySelector('#editType').value = type;
     document.querySelector('#editName').value = name;
     document.querySelector('#editDuration').value = duration;
     document.querySelector('#editCalories').value = calories;
@@ -21,6 +22,7 @@ function editExercise(id, name, duration, calories) {
 function submitForm() {
 
     const editedId = document.getElementById('editId').value;
+    const editedType = document.getElementById('editType').value;
     const editedName = document.getElementById('editName').value;
     const editedDuration = document.getElementById('editDuration').value;
     const editedCalories = document.getElementById('editCalories').value;
@@ -36,9 +38,15 @@ function submitForm() {
     idInput.value = editedId;
     form.appendChild(idInput); 
 
+    const typeInput = document.createElement('input');
+    typeInput.type = 'hidden';
+    typeInput.name = 'exercisetype';
+    typeInput.value = editedType;
+    form.appendChild(typeInput);
+    
     const nameInput = document.createElement('input');
     nameInput.type = 'hidden';
-    nameInput.name = 'cardioname';
+    nameInput.name = 'exercisename';
     nameInput.value = editedName;
     form.appendChild(nameInput);
 
@@ -56,7 +64,7 @@ function submitForm() {
 
     document.body.appendChild(form);
 
-    form.submit();
+   form.submit();
 }
 
 

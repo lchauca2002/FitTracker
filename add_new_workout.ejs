@@ -5,46 +5,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/styles/Form.css">
 </head>
 
 <body>
     <% layout('layouts/boilerplate') %>
-        <h1>Add Workout</h1>
-         <form action="/exerciselog" method="post" class="row g-3 needs-validation" novalidate>
-            <input type="hidden" name="date" value="dateInput" required>
-            <input type="hidden" name="exercisetype" value="cardio" required>
-            <div class="col-md-4">
-                <label for="validationCustom01" class="form-label">Add Workout Name:</label>
-                <input type="text" class="form-control" id="validationCustom01" name="exercisename" required>
-                <div class="invalid-feedback">
-                    Please provide workout name.
+        <div class="subForm">
+            <h1>Add Cardio Workout</h1>
+            <br>
+            <div class="container">
+            <form action="/exerciselog" method="post" class="row g-3 needs-validation" novalidate>
+                <input type="hidden" name="date" value="dateInput" required>
+                <input type="hidden" name="exercisetype" value="cardio" required>
+                <div class="col-md-4">
+                    <div class="user-box">
+                        <input type="text" class="form-control" id="validationCustom01" name="exercisename" required>
+                        <label for="validationCustom01" class="form-label">Add Workout Name</label>
+                        <div class="invalid-feedback">
+                            Please provide workout name.
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-                <label for="validationCustom02" class="form-label">How Long?</label>
-                <input type="number" class="form-control" id="validationCustom02" name="duration"
-                    required><span>Minutes</span>
-                <div class="invalid-feedback">
-                    Please provide duration.
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <div class="user-box">
+                        <input type="number" class="form-control" id="validationCustom02" name="duration" required>
+                        <label for="validationCustom02" class="form-label">How Long? (Minutes)</label>
+                        <div class="invalid-feedback">
+                            Please provide duration.
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-                <label for="validationCustom03" class="form-label"># of Calories Burned</label>
-                <input type="number" class="form-control" id="validationCustom03" name="calories" required>
-                <div class="invalid-feedback">
-                    Please provide calories burned.
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <div class="user-box">
+                        <input type="number" class="form-control" id="validationCustom03" name="calories" required>
+                        <label for="validationCustom03" class="form-label"># of Calories Burned</label>
+
+                        <div class="invalid-feedback">
+                            Please provide calories burned.
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-8"></div>
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit">Submit form</button>
-            </div>
-        </form>
-        <a href="/add_to_log">Return to adding a workout</a>
-        <br>
-        <a href="/exerciselog">Return to Log</a>
+                <div class="col-md-8"></div>
+                <div class="col-12">
+
+                    <button class="btn btn-secondary" id="buttonsub" type="submit">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Submit form
+                    </button>
+                </div>
+                <div class="col-6">
+                    <a href="/add_to_log">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Return to adding a workout</a>
+                    
+                </div>
+                <div class="col-6">
+                    <a href="/exerciselog">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Return to Exercise Log</a>
+                </div>
+            </form>
+        </div>
+        </div>
+
+
         <script src="/scripts/newDate.js"></script>
 </body>
 

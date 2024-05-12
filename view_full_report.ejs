@@ -6,52 +6,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/styles/filter.css">
 </head>
 
 <body>
     <% layout('layouts/boilerplate') %>
-        <h2>Full Diary Report</h2>
-
-        <h3>Filter here:</h3>
-        <p>From: <input type="text" class="from"></p>
-        <p>To: <input type="text" class="to"></p>
-        <fieldset>
-            <legend>Choose the Exercise Type:</legend>
-            <div>
-                <input type="checkbox" class="exercisetype" id="cardio" value="cardio">
-                <label for="cardio">Cardio</label>
-                <input type="checkbox" class="exercisetype" id="strength" value="strength">
-                <label for="strength">Strength</label>
+<h3 style="text-align: center;">Filter here:</h3>
+<div class="container" id="searches">
+    <div class="row">
+        <!-- Column for "From" and "To" inputs -->
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-wrapper">
+                        <label for="from">From <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
+                            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                          </svg></label>
+                        <input type="text" class="from" id="from">
+                    </div>
+                </div>
             </div>
-        </fieldset>
-        
-        <button class="filterButton">Filter</button>
-        
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-wrapper">
+                        <label for="to">To <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
+                            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                          </svg></label>
+                        <input type="text" class="to" id="to">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Column for exercise type selection -->
+        <div class="col-md-3 pt-4">
+            <fieldset class="field">
+                <legend class="legendtext">Choose the Exercise Type</legend>
+                <div class="inputlabels">
+                    <div class="il">
+                        <input type="checkbox" class="exercisetype" id="cardio" value="cardio">
+                        <label for="cardio">Cardio</label>
+                    </div>
+                    <div class="il">
+                        <input type="checkbox" class="exercisetype" id="strength" value="strength">
+                        <label for="strength">Strength</label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-4 pt-4">
+            <button class="filterButton" id="buttonsub">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Filter</button>
+        </div>
+    </div>
+</div>
 
-        <div>
+
+        <div class="container">
+            <% let PrevDate = null; %>
             <ul id="exerciseList">
                 <% for(let workout of userExerciseLogs) { %>
+                    <% const currentDate = workout.date.toLocaleDateString(); %>
+                    <% if(PrevDate !== currentDate){  %>
                     <li class="exercise">
-                        <p>Date: <%= workout.date.toLocaleDateString() %></p>
-                        <p>Exercise Type: <%= workout.exercisetype %></p>
-                        <p>Exercise Name: <%= workout.exercisename %></p>
-                        <% if(workout.exercisetype === 'cardio') { %>
-                            <p>Duration: <%= workout.duration %></p>
-                            <p>Calories: <%= workout.calories %></p>
-                        <% } else if(workout.exercisetype === 'strength') { %>
-                            <p>Num of Sets: <%= workout.numofsets %></p>
-                            <p>Repetitions: <%= workout.repetitions %></p>
-                            <p>Weight: <%= workout.weight %></p>
-                        <% } %>
-                        <p>Logged in userID: <%= currentUser.username %></p>
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr class="tablehead1">
+                                    <th colspan="8" style="text-align: center;"><%= workout.date.toLocaleDateString() %></th>
+                                </tr>
+                                <tr class="tablehead2">
+                                    <th scope="col" class="topRow"> Exercise Type</th>
+                                    <th scope="col" class="topRow">Exercise Name</th>
+                                    <th scope="col" class="topRow">Calories</th>
+                                    <th scope="col" class="topRow">Duration</th>
+                                    <th scope="col" class="topRow">Number Of Sets</th>
+                                    <th scope="col" class="topRow">Repetitions</th>
+                                    <th scope="col" class="topRow">Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tabledata1"> 
+                                    <td> <%= workout.exercisetype %></td>
+                                    <td> <%= workout.exercisename %></td>
+                                    <% if(workout.calories) {%>
+                                        <td><%= workout.calories %></td>
+                                    <% } else { %>
+                                        <td>--</td>
+                                    <% } %>
+                                    <% if(workout.duration) { %>
+                                        <td><%= workout.duration %></td>
+                                    <% } else { %>
+                                        <td>--</td>
+                                    <% } %>
+                                    <% if(workout.numofsets) { %>
+                                        <td><%= workout.numofsets %></td>
+                                    <% } else { %>
+                                        <td>--</td>
+                                    <% } %>
+                                    <% if(workout.repetitions) { %>
+                                        <td><%= workout.repetitions %></td>
+                                    <% } else { %>
+                                        <td>--</td>
+                                    <% } %>
+                                    <% if(workout.weight) { %>
+                                        <td><%= workout.weight %></td>
+                                    <% } else { %>
+                                        <td>--</td>
+                                    <% } %>
+                                </tr>
+                            </tbody>
                     </li>
+                    <% PrevDate = currentDate %>
+                    <% } else if(PrevDate===currentDate){ %>
+                        <li class="exercise">
+                        <tr class="tabledata2">
+                            <td> <%= workout.exercisetype %></td>
+                            <td> <%= workout.exercisename %></td>
+                            <% if(workout.calories) { %>
+                                <td><%= workout.calories %></td>
+                            <% } else { %>
+                                <td>--</td>
+                            <% } %>
+                            <% if(workout.duration) { %>
+                                <td><%= workout.duration %></td>
+                            <% } else { %>
+                                <td>--</td>
+                            <% } %>
+                            <% if(workout.numofsets) { %>
+                                <td><%= workout.numofsets %></td>
+                            <% } else { %>
+                                <td>--</td>
+                            <% } %>
+                            <% if(workout.repetitions) { %>
+                                <td><%= workout.repetitions %></td>
+                            <% } else { %>
+                                <td>--</td>
+                            <% } %>
+                            <% if(workout.weight) { %>
+                                <td><%= workout.weight %></td>
+                            <% } else { %>
+                                <td>--</td>
+                            <% } %>
+                        </tr>
+                    </li>
+                    <% } else{}%>
+
                 <% } %>
+            </table>
             </ul>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
         <script src="/scripts/filterdate.js"></script>
+        
+        
 </body>
 
 </html>
